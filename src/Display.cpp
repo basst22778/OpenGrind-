@@ -1,7 +1,9 @@
 #include <Definitions.h>
 #include <Display.h>
 #include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
+#include <Adafruit_SH110X.h>
+#include <Fonts/FreeSans9pt7b.h>
+#include <Fonts/FreeSans24pt7b.h>
 
 static const unsigned char PROGMEM cup[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC1, 0xC1, 0x80, 0x00, 0x01, 0x83, 0x83, 0x00, 0x00, 0x01,
@@ -20,9 +22,9 @@ static const unsigned char PROGMEM cup[] = {
 };
 
 Display::Display() {
-    display = new Adafruit_SSD1306(128, 64, &Wire, 4);
+    display = new Adafruit_SH1106G(128, 64, &Wire, 4);
 
-    if(!display->begin(SSD1306_SWITCHCAPVCC, DISPLAY_ADDR)) {
+    if(!display->begin(DISPLAY_ADDR)) {
         for(;;);
     }
 
@@ -53,19 +55,31 @@ void Display::printDoubleDose() {
     display->display();
 }
 
+void Display::printSpecialDose() {
+    display->clearDisplay();
+    display->setTextColor(SH110X_WHITE);
+    display->setFont(&FreeSans9pt7b);
+    display->setCursor(40, 48);
+    display->print("Bodenlos");
+    display->display();
+}
+
 void Display::printTime(double time) {
     display->clearDisplay();
 
-    display->setTextColor(WHITE);
-    display->setTextSize(4);
-    display->setCursor(10, 20);
+   display->setTextColor(SH110X_WHITE);
+
+   // display->setTextSize(4);
+    display->setFont(&FreeSans24pt7b);
+    display->setCursor(40, 48);
     time = time < 0 ? 0.0 : time;
     time = time < 100 ? time : 99.9;
-    display->print(time, time < 10 ? 2 : 1);
-
-    display->setTextSize(2);
-    display->setCursor(110, 34);
-    display->print("S");
+    //display->print(time, time < 10 ? 2 : 1); Abfrage raus, wozu 2 Kommastellen?
+    display->print(time, 1);
+    display->setFont(&FreeSans9pt7b);
+   // display->setTextSize(2);
+    //display->setCursor(110, 34);
+    display->print("s");
 
     display->println();
     display->display();
@@ -73,8 +87,8 @@ void Display::printTime(double time) {
 
 void Display::printStatistics(int numberSingles, int numberDoubles) {
     display->clearDisplay();
-
-    display->setTextColor(WHITE);
+    display->setFont();
+    display->setTextColor(SH110X_WHITE);
     display->setTextSize(2);
     display->setCursor(10, 16);
     display->print("#S:");

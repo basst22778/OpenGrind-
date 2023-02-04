@@ -7,6 +7,7 @@
 #include "Dosage.h"
 #include "Grinder.h"
 
+
 RotaryEncoder *encoder;
 Display * display;
 Dosage *dosage;
@@ -50,39 +51,94 @@ void loop() {
 
       // select dosage
       if (encoder->wasTurnedLeft()) {
-        dosage->singleDoseSelected = true;
+        if (dosage->DoseModeSelected > 0){
+          dosage->DoseModeSelected--;
+        }
+       
       } else if (encoder->wasTurnedRight()) {
-        dosage->singleDoseSelected = false;
+        if (dosage->DoseModeSelected < 2){
+        dosage->DoseModeSelected++;
+        }
       }
 
       // display dosage
-      if (dosage->singleDoseSelected) {
+      switch (dosage->DoseModeSelected)
+      {
+      case 0:
         display->printSingleDose();
-      } else {
+        break;
+      case 1:
         display->printDoubleDose();
+        break;
+      case 2:
+        display->printSpecialDose();  
+        break;
       }
-
       break;
 
     case SET_DOSE:
-      if (encoder->wasTurnedLeft()) {
+      switch (dosage->DoseModeSelected)
+      {
+      case 0:
+        if (encoder->wasTurnedLeft()) {
+           dosage->singleDoseTime -= 0.1;
+        } else if (encoder->wasTurnedRight()) { 
+            dosage->singleDoseTime += 0.1;
+        }
+        display->printTime(dosage->singleDoseTime);
+        break;
+       
+      case 1:
+        if (encoder->wasTurnedLeft()) {
+           dosage->doubleDoseTime -= 0.1;
+        } else if (encoder->wasTurnedRight()) { 
+            dosage->doubleDoseTime += 0.1;
+        }
+        display->printTime(dosage->doubleDoseTime);
+        break;  
+
+      case 2:
+        if (encoder->wasTurnedLeft()) {
+           dosage->specialDoseTime -= 0.1;
+        } else if (encoder->wasTurnedRight()) { 
+            dosage->specialDoseTime += 0.1;
+        }
+        display->printTime(dosage->specialDoseTime);
+        break;
+      }
+      
+      /*if (encoder->wasTurnedLeft()) {
         dosage->singleDoseTime -= dosage->singleDoseSelected ? 0.1 : 0.0;
         dosage->doubleDoseTime -= dosage->singleDoseSelected == false ? 0.1 : 0.0;
       } else if (encoder->wasTurnedRight()) {
         dosage->singleDoseTime += dosage->singleDoseSelected ? 0.1 : 0.0;
         dosage->doubleDoseTime += dosage->singleDoseSelected == false ? 0.1 : 0.0;
       }
-
+      */
       dosage->writeToEEPROM();
-      display->printTime(dosage->singleDoseSelected ? dosage->singleDoseTime : dosage->doubleDoseTime);
-      
+
+     // display->printTime(dosage->singleDoseSelected ? dosage->singleDoseTime : dosage->doubleDoseTime);
+    
       state = NORMAL;
       break;
 
     case GRINDING:
-      grinder->increaseShotCounter(dosage->singleDoseSelected);
+      grinder->increaseShotCounter(dosage->DoseModeSelected);
 
-      grinder->on(dosage->singleDoseSelected ? dosage->singleDoseTime : dosage->doubleDoseTime);
+      switch (dosage->DoseModeSelected)
+      {
+      case 0:
+        grinder->on(dosage->singleDoseTime);
+        break;
+      case 1:
+        grinder->on(dosage->doubleDoseTime);
+        break;
+      case 2:
+         grinder->on(dosage->specialDoseTime);
+        break;  
+      }
+
+      //grinder->on(dosage->singleDoseSelected ? dosage->singleDoseTime : dosage->doubleDoseTime);
       while (millis() < grinder->getTargetTime()) {
         display->printTime((grinder->getTargetTime() - millis()) / 1000.0);
       }

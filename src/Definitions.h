@@ -6,6 +6,8 @@
 #define ENC_SW_LONG_PRESS_DUR 5000 // Encoder Switch Long Press Activation Time in ms
 #define ENC_THRESHOLD 2 // How responsive should the dose switching be?
 #define START_BTN 5 // Start Button Input Pin
-#define SSR 6 // Start Button Input Pins
+#define SSR 6 // Relay Pins
+#define LED 7 // Status LED Pins
 #define SINGLEDOSE_DEFAULT_TIME 2.00 // Default Single Dose Time in S
 #define DOUBLEDOSE_DEFAULT_TIME 4.00 // Default Double Dose Time in S
+#define SPECIALDOSE_DEFAULT_TIME 3.00 // Default Double Dose Time in S

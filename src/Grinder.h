@@ -11,7 +11,7 @@ class Grinder
         bool startBtnPressed();
         int getSingleDoseStats();
         int getDoubleDoseStats();
-        void increaseShotCounter(bool isSingleDose);
+        void increaseShotCounter(int doseMode);
         void resetStats();
         unsigned long getTargetTime();
         void on(double targetTime);

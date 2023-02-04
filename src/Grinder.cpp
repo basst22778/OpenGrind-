@@ -5,6 +5,7 @@
 
 Grinder::Grinder() {
     pinMode(SSR, OUTPUT);
+    pinMode(LED, OUTPUT);
     pinMode(START_BTN, INPUT_PULLUP);
 }
 
@@ -24,12 +25,26 @@ int Grinder::getDoubleDoseStats() {
     return res;
 }
 
-void Grinder::increaseShotCounter(bool isSingleDose) {
+void Grinder::increaseShotCounter(int doseMode) {
+    switch (doseMode)
+    {
+    case 1:
+        EEPROM.put(eeAddress, getSingleDoseStats() + 1);
+        break;
+    case 2:
+        EEPROM.put(eeAddress + sizeof(int), getDoubleDoseStats() + 1);
+        break;
+    case 3:
+        EEPROM.put(eeAddress + 2 * sizeof(int), getDoubleDoseStats() + 1);
+    default:
+        break;
+    }
+    /*
     if (isSingleDose) {
         EEPROM.put(eeAddress, getSingleDoseStats() + 1);
     } else {
         EEPROM.put(eeAddress + sizeof(int), getDoubleDoseStats() + 1);
-    }
+    }*/
 }
 
 void Grinder::resetStats() {
@@ -45,8 +60,10 @@ unsigned long Grinder::getTargetTime() {
 void Grinder::on(double targetTime) {
     this->targetTime = millis() + targetTime * 1000;
     digitalWrite(SSR, HIGH);
+    digitalWrite(LED, HIGH);
 }
 
 void Grinder::off() {
     digitalWrite(SSR, LOW);
+    digitalWrite(LED, LOW);
 }

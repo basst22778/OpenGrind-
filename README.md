@@ -42,7 +42,7 @@ From there on you can choose the action to achieve the desired result.
 
 | Desired Result                       | Action                                                                      | Possible Result                                              |
 | ------------------------------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| Switch between single or double dose | turn rotary encoder                                                         | <img title="" src="assets/doubleCup.jpg" alt="" width="211"> |
+| Switch between single,  double or Special dose | turn rotary encoder                                                         | <img title="" src="assets/doubleCup.jpg" alt="" width="211"> |
 | Set grinding time for selected dose  | turn the rotary encoder while pressing it                                   | <img title="" src="assets/time.jpg" alt="" width="211">      |
 | Start the grinder                    | press the start button                                                      | <img title="" src="assets/time.jpg" alt="" width="211">      |
 | Show statistics                      | press and hold the rotary encoder for five seconds                          | <img title="" src="assets/stats.jpg" alt="" width="211">     |

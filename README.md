@@ -9,8 +9,18 @@
 <br>
 
 ## About
+Fork of the OpenGrind Project.
 
-This project is an advancement of my [7_Dollar_Coffee_Grinder_Timer](https://github.com/GatCode/7_Dollar_Coffee_Grinder_Timer) I developed a few years ago. As the time goes on, so does the need for a more sophisticated coffee grinder. Similar to what I stated in the corresponding [Instructable](https://www.instructables.com/id/The-7-Coffee-Grinder-Timer/), the aim of this firmware is to find a great coffee grinder with as much bang for your buck as possible and to customize it to your needs. This firmware is my way of achieving a more professional and reliable coffee grinder. You can find more information on the new [OpenGrind Instructable](https://www.instructables.com/The-14-Sophisticated-Coffee-Grinder-Timer/).
+Changes:
+
+- Added 3 Grindmodes
+- Use of SSH1106 Display instead of SSD1306
+- Rounded Font instead of pixel Font 
+
+---------
+
+
+You can find more information on the new [OpenGrind Instructable](https://www.instructables.com/The-14-Sophisticated-Coffee-Grinder-Timer/).
 
 
 
@@ -34,19 +44,19 @@ Make sure you have installed [PlatformIO](https://platformio.org/platformio-ide)
 
 ## Usage
 
-The first screen you see after booting is the default screen which contains the selection for the grinding dosage (one or two cup icons).
+The first screen you see after booting is the default screen which contains the selection for the grinding dosage 
 
 <img title="" src="assets/singleCup.jpg" alt="" width="211"> <img title="" src="assets/doubleCup.jpg" alt="" width="211">
 
 From there on you can choose the action to achieve the desired result.
 
-| Desired Result                       | Action                                                                      | Possible Result                                              |
-| ------------------------------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| Switch between single or double dose | turn rotary encoder                                                         | <img title="" src="assets/doubleCup.jpg" alt="" width="211"> |
-| Set grinding time for selected dose  | turn the rotary encoder while pressing it                                   | <img title="" src="assets/time.jpg" alt="" width="211">      |
-| Start the grinder                    | press the start button                                                      | <img title="" src="assets/time.jpg" alt="" width="211">      |
-| Show statistics                      | press and hold the rotary encoder for five seconds                          | <img title="" src="assets/stats.jpg" alt="" width="211">     |
-| Factory Reset                        | press and hold the rotary encoder for five seconds while in show statistics | reboot                                                       |
+| Desired Result                                | Action                                                                      | Possible Result                                              |
+| --------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| Switch between single, double or Special dose | turn rotary encoder                                                         | <img title="" src="assets/doubleCup.jpg" alt="" width="211"> |
+| Set grinding time for selected dose           | turn the rotary encoder while pressing it                                   | <img title="" src="assets/time.jpg" alt="" width="211">      |
+| Start the grinder                             | press the start button                                                      | <img title="" src="assets/time.jpg" alt="" width="211">      |
+| Show statistics                               | press and hold the rotary encoder for five seconds                          | <img title="" src="assets/stats.jpg" alt="" width="211">     |
+| Factory Reset                                 | press and hold the rotary encoder for five seconds while in show statistics | reboot                                                       |
 
 **Note for the statistics:** S stands for the number of single dosages you have ground with this grinder; likewise D stands for the number of ground double dosages.
 
